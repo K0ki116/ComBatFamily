@@ -201,8 +201,8 @@ comfam <- function(data, bat, covar = NULL, model = lm, formula = NULL,
         }
 
         d_new <- (sum2/2 + d_b)/(n_b/2 + d_a - 1)
-
-        change <- max(abs(g_new - g_old)/g_old, abs(d_new - d_old)/d_old)
+        epsilon = .Machine$double.eps 
+        change <- max(abs(g_new - g_old)/(g_old + epsilon) , abs(d_new - d_old)/(d_old + epsilon))
 
         if (count > 30) {
           if (change > change_old) {
@@ -428,8 +428,8 @@ predict.comfam <- function(object, newdata, newbat, newcovar = NULL,
         }
 
         d_new <- (sum2/2 + d_b)/(n_b/2 + d_a - 1)
-
-        change <- max(abs(g_new - g_old)/g_old, abs(d_new - d_old)/d_old)
+        epsilon = .Machine$double.eps 
+        change <- max(abs(g_new - g_old)/(g_old + epsilon), abs(d_new - d_old)/(d_old + epsilon))
 
         if (count > 30) {
           if (change > change_old) {
